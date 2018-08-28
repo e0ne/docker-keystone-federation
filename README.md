@@ -63,6 +63,9 @@ export OS_PROTOCOL="saml2"
 source openrc && openstack token issue
 ```
 
+#### 5) Update trusted_dashboard option
+'trusted_dashboard' option in the keystone.conf should be updated
+
 ## How OpenStack Keystone Federation works ?
 One of the services that OpenStack Keystone provides is `Identity Service`:
  
@@ -74,3 +77,11 @@ In this case as result of a AuthN procedure on `Identity Provider` side, the use
 ![](http://7xp2eu.com1.z0.glb.clouddn.com/artifact%20binding.png?imageView2/1/w/600/h/400/q/100)
 
 Using OpenStack Keystone mapping mechanism an administrator relying on information from SAML assertion can assign to a federated user the local for a Openstack Envirtonment projects, roles and groups.
+
+
+Useful links
+------------
+* https://docs.openstack.org/keystone/pike/advanced-topics/federation/mapping_combinations.html
+* https://docs.openstack.org/keystone/pike/_modules/keystone/conf/federation.html
+* https://docs.openstack.org/openstack-ansible-os_keystone/latest/configure-federation-mapping.html
+* https://docs.openstack.org/keystone/pike/advanced-topics/federation/websso.html

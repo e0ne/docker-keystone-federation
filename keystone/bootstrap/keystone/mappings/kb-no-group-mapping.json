@@ -1,24 +1,46 @@
 [
-  {
-    "remote": [
-      {
-        "type": "cn"
-      },
-      {
-        "type": "cn",
-        "whitelist":["kb"]
-      },
-      {
-        "type": "mail"
-      }
-    ],
-    "local": [
-      {
-        "user": {
-          "name":  "{0}",
-          "email": "{1}"
-        }
-      }
-    ]
-  }
+    {
+        "remote": [
+            {
+                "type": "cn"
+            },
+            {
+                "whitelist": [
+                    "kb"
+                ],
+                "type": "cn"
+            },
+            {
+                "type": "mail"
+            }
+        ],
+        "local": [
+            {
+                "user": {
+                    "name": "{0}",
+                    "email": "{1}"
+                }
+            },
+            {
+                "projects": [
+                    {
+                        "name": "admin",
+                        "roles": [
+                            {
+                                "name": "admin"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "federation",
+                        "roles": [
+                            {
+                                "name": "_member_"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
 ]
