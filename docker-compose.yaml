@@ -1,4 +1,10 @@
 version: "2"
+volumes:
+  fernet_keys:
+  bootstrap.ldif:
+  db_data:
+  bootstraped1:
+  bootstraped2:
 
 networks:
   openstack:
@@ -7,19 +13,18 @@ networks:
        driver: default
        config:
           - subnet: 192.168.200.0/24
-services:
 
+services:
   database:
     image: mysql:5.7
     container_name: database
     networks:
       openstack:
         ipv4_address: 192.168.200.3
+    volumes:
+    - db_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: r00tme
-      MYSQL_DATABASE: keystone
-      MYSQL_USER: keystone
-      MYSQL_PASSWORD: r00tme
 
   idp:
     build: ./shibboleth
@@ -39,9 +44,12 @@ services:
       - ldap
 
   ldap:
-     image: osixia/openldap:1.1.8
+     image: osixia/openldap:1.2.3
      container_name: ldap
      hostname: ldap
+     command: [--copy-service]
+     volumes:
+       - ./domain.ldif:/container/service/slapd/assets/config/bootstrap/ldif/data.ldif
      networks:
        openstack:
          ipv4_address: 192.168.200.2
@@ -62,6 +70,9 @@ services:
        PHPLDAPADMIN_HTTPS: "false"
 
   keystone:
+    volumes:
+      - fernet_keys:/fernet_keys
+      - bootstraped1:/bootstraped
     ports:
       - "5000:5000"
     build:
@@ -69,9 +80,15 @@ services:
       args:
         keystone_version: master
     environment:
-      bootstrap: 1
+      - BOOTSTRAP=1
+      - DB_NAME=database
+      - KEYSTONE_PORT=5000
+      - ADMIN_PORT=35357
+      - HOST_NAME=keystone
+      - REGION=RegionOne
     container_name: keystone
     hostname: keystone
+    command: ["/wait-for-it.sh", "-s", "-t", "60", "database:3306", "--", "bash", "/home/keystone/bootstrap/run.sh"]
     networks:
       openstack:
         ipv4_address: 192.168.200.6
@@ -79,3 +96,32 @@ services:
       - database
       - ldap
       - idp
+
+  keystone2:
+    volumes:
+      - fernet_keys:/fernet_keys
+      - bootstraped2:/bootstraped
+    ports:
+      - "5001:5001"
+    build:
+      context: ./keystone
+      args:
+        keystone_version: master
+    environment:
+    - BOOTSTRAP=1
+    - DB_NAME=database
+    - KEYSTONE_PORT=5001
+    - ADMIN_PORT=35358
+    - HOST_NAME=keystone2
+    - REGION=RegionTWO
+    container_name: keystone2
+    hostname: keystone2
+    command: ["./wait-for-it.sh", "-s", "-t", "60", "database:3306", "--", "bash", "/home/keystone/bootstrap/run.sh"]
+    networks:
+      openstack:
+       ipv4_address: 192.168.200.7
+    depends_on:
+      - database
+      - ldap
+      - idp
+      - keystone

@@ -20,9 +20,7 @@ openstack role add --project federation --group federated_users _member_
 openstack role add --project federation --group federated_admins _member_
 openstack role add --project federation --group federated_admins admin
 
-openstack mapping create \
-        --rules /home/keystone/bootstrap/keystone/mappings/kb-no-group-mapping.json \
-        ldap-map
+openstack mapping create --rules /home/keystone/bootstrap/keystone/mappings/default-federation-mapping.json ldap-map
 
 openstack identity provider create \
         --remote-id http://idp/idp/shibboleth shibboleth
@@ -30,7 +28,6 @@ openstack identity provider create \
 openstack federation protocol create \
         --identity-provider shibboleth \
         --mapping ldap-map saml2
-
 
 # just for testing
 openstack project create test
