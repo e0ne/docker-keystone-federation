@@ -1,4 +1,3 @@
-DROP database keystone;
-create database keystone;
-GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'r00tme';
-GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'r00tme';
+CREATE database IF NOT EXISTS {host_name};
+GRANT ALL PRIVILEGES ON {host_name}.* TO 'keystone'@'localhost' IDENTIFIED BY 'r00tme';
+GRANT ALL PRIVILEGES ON {host_name}.* TO 'keystone'@'%' IDENTIFIED BY 'r00tme';

@@ -5,7 +5,7 @@
     xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
     clockSkew="180">
 
-  <ApplicationDefaults entityID="http://keystone:5000/shibboleth">
+  <ApplicationDefaults entityID="http://keystone_url:keystone_port/shibboleth">
 
       <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
                 checkAddress="false" handlerSSL="false" cookieProps="http">
