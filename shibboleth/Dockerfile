@@ -1,4 +1,5 @@
-FROM azul/zulu-openjdk:8
+#FROM azul/zulu-openjdk:8
+FROM azul/zulu-openjdk:8u20-8.3.0.1
 
 EXPOSE 443 8443 80
 

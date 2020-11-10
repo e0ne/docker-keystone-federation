@@ -9,7 +9,7 @@ IDP_JETTY_BASE=idp-jetty-base-$JETTY_BASE_VER
 JETTY=jetty-distribution-$JETTY_VER
 
 dists_urls=(
-  http://shibboleth.net/downloads/identity-provider/$SHIBBOLETH_VER/$IDP.tar.gz
+  http://shibboleth.net/downloads/identity-provider/archive/$SHIBBOLETH_VER/$IDP.tar.gz
   https://build.shibboleth.net/nexus/content/repositories/releases/net/shibboleth/idp/idp-jetty-base/$JETTY_BASE_VER/$IDP_JETTY_BASE.tar.gz
   https://build.shibboleth.net/nexus/content/repositories/thirdparty/org/eclipse/jetty/jetty-distribution/$JETTY_VER/$JETTY.tar.gz
 )
